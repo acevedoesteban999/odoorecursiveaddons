@@ -12,14 +12,18 @@ Expand `addons_path` recursively from the Odoo configuration file.
 ```
     from odoorecursiveaddons import expand_addons_path_recursive_from_config
 
-    paths = expand_addons_path_recursive_from_config()
-    print(paths)  
+    if __name__ == "__main__":
+        for path in expand_addons_path_recursive_from_config():
+            if path not in odoo.addons.__path__:
+                odoo.addons.__path__.append(path)
+        odoo.cli.main()
+    
 ```
 
 ## Use in odoo.conf
 ```
-[options]
-addons_path_recursive = /route/to/addons
+    [options]
+    addons_path_recursive = /route/to/addons
 ```
 
 
